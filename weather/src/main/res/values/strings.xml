@@ -1,12 +1,9 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Weather</string>
 
-    <!-- First fragment. -->
-    <string name="first_label">First Fragment</string>
+    <!-- Form fragment. -->
+    <string name="form_city_name">City name</string>
+    <string name="form_from_map">From a map</string>
 
-    <!-- Second fragment. -->
-    <string name="second_label">Second Fragment</string>
 
-    <!-- Third fragment. -->
-    <string name="third_label">Third Fragment</string>
 </resources>
