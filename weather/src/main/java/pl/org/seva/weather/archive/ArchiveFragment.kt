@@ -17,25 +17,9 @@
  * If you like this program, consider donating bitcoin: bc1qncxh5xs6erq6w4qz3a7xl7f50agrgn3w58dsfp
  */
 
-package pl.org.seva.weather.form
+package pl.org.seva.weather.archive
 
-import android.annotation.SuppressLint
-import android.os.Bundle
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fr_form.*
 import pl.org.seva.weather.R
-import pl.org.seva.weather.main.extension.invoke
-import pl.org.seva.weather.main.extension.nav
 
-class FormFragment : Fragment(R.layout.fr_form) {
-
-    @SuppressLint("CheckResult")
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        location {
-            println("wiktor clicked location")
-            nav(R.id.action_form_to_location_picker)
-        }
-    }
-}
+class ArchiveFragment : Fragment(R.layout.fr_archive)

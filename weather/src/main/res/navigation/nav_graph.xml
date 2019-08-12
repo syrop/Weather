@@ -3,36 +3,31 @@
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/nav_graph"
-            app:startDestination="@id/mainFragment">
+            app:startDestination="@id/form">
 
     <fragment
-        android:id="@+id/mainFragment"
+        android:id="@+id/form"
         android:name="pl.org.seva.weather.form.FormFragment"
         tools:layout="@layout/fr_form"
-        android:label="@string/first_label">
+        android:label="@string/app_name">
         <action
-            android:id="@+id/action_mainFragment_to_secondFragment"
-            app:destination="@id/secondFragment"/>
+            android:id="@+id/action_form_to_location_picker"
+            app:destination="@id/locationPickerFragment" />
+        <action
+            android:id="@+id/action_form_to_archive"
+            app:destination="@id/archive" />
     </fragment>
 
     <fragment
-        android:id="@+id/secondFragment"
-        android:name="pl.org.seva.weather.main.SecondFragment"
-        android:label="@string/second_label"
-        tools:layout="@layout/fr_form">
-        <action
-            android:id="@+id/action_secondFragment_to_thirdFragment"
-            app:destination="@id/thirdFragment" />
-    </fragment>
+        android:id="@+id/locationPickerFragment"
+        android:name="pl.org.seva.weather.form.LocationPickerFragment"
+        android:label="@string/location_picker_label"
+        tools:layout="@layout/fr_location_picker"/>
 
     <fragment
-        android:id="@+id/thirdFragment"
-        android:name="pl.org.seva.weather.main.ThirdFragment"
-        android:label="@string/third_label"
-        tools:layout="@layout/fr_form">
-        <action
-            android:id="@+id/action_thirdFragment_to_secondFragment"
-            app:destination="@id/secondFragment" />
-    </fragment>
+        android:id="@+id/archive"
+        android:name="pl.org.seva.weather.archive.ArchiveFragment"
+        android:label="@string/archive_label"
+        tools:layout="@layout/fr_archive"/>
 
 </navigation>

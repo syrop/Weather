@@ -12,6 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCwqU8jyEYPdLNsQFrgRUYBIzGVWshvGTE"/>
+
         <activity
             android:name="pl.org.seva.weather.main.MainActivity"
             android:launchMode="singleTop"

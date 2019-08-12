@@ -5,5 +5,11 @@
     <string name="form_city_name">City name</string>
     <string name="form_from_map">From a map</string>
 
+    <!-- Location picker fragment. -->
+    <string name="location_picker_label">Select location</string>
+    <string name="location_picker_prompt">Long tap to select</string>
+
+    <!-- Archive fragment. -->
+    <string name="archive_label">Archive</string>
 
 </resources>
