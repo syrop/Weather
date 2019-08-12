@@ -11,10 +11,10 @@ import pl.org.seva.weather.main.init.KodeinModuleBuilder
 @Suppress("unused")
 class WeatherApplication : Application() {
 
-    init { Kodein.global.addImport(KodeinModuleBuilder(this).build()) }
-
     override fun onCreate() {
         super.onCreate()
+
+        Kodein.global.addImport(KodeinModuleBuilder(this).build())
         GlobalScope.launch { bootstrap.boot() }
     }
 }
