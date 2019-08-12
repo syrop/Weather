@@ -17,14 +17,14 @@
  * If you like this program, consider donating bitcoin: bc1qncxh5xs6erq6w4qz3a7xl7f50agrgn3w58dsfp
  */
 
-package pl.org.seva.weather.main
+package pl.org.seva.weather.form
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import pl.org.seva.weather.R
 
-class MainFragment : Fragment(R.layout.fr_main) {
+class FormFragment : Fragment(R.layout.fr_form) {
 
     @SuppressLint("CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
