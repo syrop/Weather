@@ -21,14 +21,28 @@ package pl.org.seva.weather.form
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.navigation.navGraphViewModels
+import kotlinx.android.synthetic.main.fr_location_picker.*
 import pl.org.seva.weather.R
+import pl.org.seva.weather.WeatherViewModel
+import pl.org.seva.weather.main.extension.invoke
+import pl.org.seva.weather.main.extension.prefs
 
 class LocationPickerFragment : Fragment(R.layout.fr_location_picker) {
+
+    private val viewModel
+            by navGraphViewModels<WeatherViewModel>(R.id.nav_graph)
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        createInteractiveMapHolder(R.id.map) {
+            prefs = this@LocationPickerFragment.prefs
+            onLocationSet = { viewModel.setLocation(it) }
+        }
 
-
+        (viewModel.addressLiveData to this) {
+            address.setText(it)
+        }
     }
 }

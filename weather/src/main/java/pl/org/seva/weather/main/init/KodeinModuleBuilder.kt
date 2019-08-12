@@ -20,6 +20,7 @@
 package pl.org.seva.weather.main.init
 
 import android.content.Context
+import android.location.Geocoder
 import android.os.Build
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinProperty
@@ -29,6 +30,7 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.multiton
 import org.kodein.di.generic.singleton
 import pl.org.seva.weather.BuildConfig
+import java.util.*
 import java.util.logging.Logger
 
 inline fun <reified T : Any> instance(tag: Any? = null) = Kodein.global.instance<T>(tag)
@@ -50,5 +52,6 @@ class KodeinModuleBuilder(private val ctx: Context) {
                 }
             }
         }
+        bind<Geocoder>() with singleton { Geocoder(ctx, Locale.getDefault()) }
     }
 }

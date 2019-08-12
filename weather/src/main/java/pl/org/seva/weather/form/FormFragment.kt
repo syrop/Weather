@@ -34,7 +34,6 @@ class FormFragment : Fragment(R.layout.fr_form) {
         super.onActivityCreated(savedInstanceState)
 
         location {
-            println("wiktor clicked location")
             nav(R.id.action_form_to_location_picker)
         }
     }
