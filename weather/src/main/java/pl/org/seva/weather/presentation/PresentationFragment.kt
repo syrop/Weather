@@ -17,23 +17,9 @@
  * If you like this program, consider donating bitcoin: bc1qncxh5xs6erq6w4qz3a7xl7f50agrgn3w58dsfp
  */
 
-package pl.org.seva.weather.main
+package pl.org.seva.weather.presentation
 
-import android.app.Application
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
-import org.kodein.di.conf.global
-import pl.org.seva.weather.main.init.bootstrap
-import pl.org.seva.weather.main.init.KodeinModuleBuilder
+import androidx.fragment.app.Fragment
+import pl.org.seva.weather.R
 
-@Suppress("unused")
-class WeatherApplication : Application() {
-
-    override fun onCreate() {
-        super.onCreate()
-
-        Kodein.global.addImport(KodeinModuleBuilder(this).build())
-        GlobalScope.launch { bootstrap.boot() }
-    }
-}
+class PresentationFragment : Fragment(R.layout.fr_presentation)

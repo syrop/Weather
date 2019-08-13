@@ -12,7 +12,7 @@
     <!-- Archive fragment. -->
     <string name="archive_label">Archive</string>
 
-    <!-- Present fragment. -->
-    <string name="present_label">Present</string>
+    <!-- Presentation fragment. -->
+    <string name="presentation_label">Presentation</string>
 
 </resources>

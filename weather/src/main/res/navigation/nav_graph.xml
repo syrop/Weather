@@ -17,8 +17,8 @@
             android:id="@+id/action_form_to_archive"
             app:destination="@id/archive" />
         <action
-            android:id="@+id/action_form_to_present"
-            app:destination="@id/present" />
+            android:id="@+id/action_form_to_presentation"
+            app:destination="@id/presentation" />
     </fragment>
 
     <fragment
@@ -34,9 +34,9 @@
         tools:layout="@layout/fr_archive"/>
 
     <fragment
-        android:id="@+id/present"
-        android:name="pl.org.seva.weather.present.PresentFragment"
+        android:id="@+id/presentation"
+        android:name="pl.org.seva.weather.presentation.PresentationFragment"
         android:label="PresentFragment"
-        tools:layout="@layout/fr_present"/>
+        tools:layout="@layout/fr_presentation"/>
 
 </navigation>
