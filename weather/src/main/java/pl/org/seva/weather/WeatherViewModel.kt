@@ -11,6 +11,8 @@ class WeatherViewModel : ViewModel() {
     private val mutableAddress by lazy { MutableLiveData<String?>() }
     val addressLiveData get() = mutableAddress as LiveData<String?>
 
+    var state = State.None
+
     var location: LatLng? = null
     var address: String? = null
 
@@ -20,5 +22,10 @@ class WeatherViewModel : ViewModel() {
             address = locationAddress.second
         }
         mutableAddress.value = locationAddress?.second ?: ""
+    }
+
+    sealed class State {
+        object None : State()
+        object InProgress : State()
     }
 }
