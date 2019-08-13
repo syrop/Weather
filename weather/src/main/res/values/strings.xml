@@ -3,7 +3,7 @@
 
     <!-- Form fragment. -->
     <string name="form_city_name">City name</string>
-    <string name="form_from_map">From a map</string>
+    <string name="form_from_map">From map</string>
 
     <!-- Location picker fragment. -->
     <string name="location_picker_label">Select location</string>
@@ -14,5 +14,11 @@
 
     <!-- Presentation fragment. -->
     <string name="presentation_label">Presentation</string>
+    <string name="presentation_name">Name:</string>
+    <string name="presentation_temp">Temp:</string>
+    <string name="presentation_pressure">Pressure:</string>
+    <string name="presentation_humidity">Humidity:</string>
+    <string name="presentation_temp_min">Temp min:</string>
+    <string name="presentation_temp_max">Temp max:</string>
 
 </resources>

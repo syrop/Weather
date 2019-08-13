@@ -27,15 +27,24 @@ interface WeatherService {
 
     @GET("weather")
     suspend fun getCity(
-            @retrofit2.http.Query("q") city: String): Response<WeatherJson>
+            @retrofit2.http.Query("q") city: String,
+            @retrofit2.http.Query("units") units: String = UNITS,
+            @retrofit2.http.Query("APPID") id: String = APPID): Response<WeatherJson>
 
     @GET("weather")
     suspend fun getLocation(
             @retrofit2.http.Query("lat") lat: Double,
-            @retrofit2.http.Query("lon") lon: Double): Response<WeatherJson>
+            @retrofit2.http.Query("lon") lon: Double,
+            @retrofit2.http.Query("units") units: String = UNITS,
+            @retrofit2.http.Query("APPID") id: String = APPID): Response<WeatherJson>
 
     sealed class Query {
         data class City(val city: String) : Query()
         data class Location(val location: LatLng) : Query()
+    }
+
+    companion object {
+        const val APPID = "83f8aa22f836aeee8b81c98f63bd1c06"
+        const val UNITS = "metric"
     }
 }

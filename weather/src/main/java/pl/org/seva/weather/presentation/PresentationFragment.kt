@@ -26,6 +26,7 @@ import androidx.navigation.navGraphViewModels
 import kotlinx.android.synthetic.main.fr_presentation.*
 import pl.org.seva.weather.R
 import pl.org.seva.weather.WeatherViewModel
+import pl.org.seva.weather.api.WeatherJson
 import pl.org.seva.weather.main.extension.back
 import pl.org.seva.weather.main.extension.invoke
 import pl.org.seva.weather.main.extension.onBack
@@ -39,17 +40,29 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
         super.onActivityCreated(savedInstanceState)
 
         fun inProgress() {
+            details.visibility = View.GONE
             progress.visibility = View.VISIBLE
+        }
+
+        fun details(weather: WeatherJson) {
+            details.visibility = View.VISIBLE
+            progress.visibility = View.GONE
+            name.text = weather.name
+            temp.text = weather.main.temp.toString()
+            pressure.text = weather.main.pressure.toString()
+            humidity.text = weather.main.humidity.toString()
+            temp_min.text = weather.main.temp_min.toString()
+            temp_max.text = weather.main.temp_max.toString()
         }
 
         (viewModel.liveState to this) { state ->
             when (state) {
                 is WeatherViewModel.State.InProgress -> inProgress()
+                is WeatherViewModel.State.Success -> details(state.weather)
             }
         }
 
         onBack {
-
             viewModel.cancelSearch()
             back()
         }

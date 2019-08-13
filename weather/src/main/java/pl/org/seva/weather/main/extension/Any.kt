@@ -17,22 +17,10 @@
  * If you like this program, consider donating bitcoin: bc1qncxh5xs6erq6w4qz3a7xl7f50agrgn3w58dsfp
  */
 
-package pl.org.seva.weather.api
+package pl.org.seva.weather.main.extension
 
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
+import pl.org.seva.weather.main.init.instance
+import pl.org.seva.weather.main.init.value
+import java.util.logging.Logger
 
-class WeatherServiceFactory {
-
-    fun getWeatherService(): WeatherService = Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .addConverterFactory(MoshiConverterFactory.create())
-            .build()
-            .create(WeatherService::class.java)
-
-    companion object {
-        const val BASE_URL = "https://api.openweathermap.org/data/2.5/"
-    }
-}
+val Any.log: Logger get() = instance<String, Logger>(arg = this::class.java.name).value

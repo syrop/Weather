@@ -27,6 +27,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import pl.org.seva.weather.api.WeatherJson
 import pl.org.seva.weather.api.WeatherService
+import pl.org.seva.weather.main.extension.log
 import pl.org.seva.weather.main.init.instance
 import java.lang.IllegalStateException
 
@@ -60,6 +61,7 @@ class WeatherViewModel : ViewModel() {
                         is WeatherService.Query.Location ->
                             weatherService.getLocation(query.location.latitude, query.location.longitude)
                     }
+                    log.info(response.raw().toString())
                     currentState = if (response.isSuccessful)
                         State.Success(checkNotNull(response.body()))
                         else State.Error
