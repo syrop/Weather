@@ -24,9 +24,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.NonCancellable
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import pl.org.seva.weather.api.WeatherJson
 import pl.org.seva.weather.api.WeatherService
+import pl.org.seva.weather.archive.WeatherDao
 import pl.org.seva.weather.main.extension.log
 import pl.org.seva.weather.main.init.instance
 import java.lang.IllegalStateException
@@ -36,6 +39,7 @@ class WeatherViewModel : ViewModel() {
     private val weatherService by instance<WeatherService>()
     private var currentState: State = State.Idle
     val liveState = MutableLiveData(currentState)
+    val weatherDao by instance<WeatherDao>()
 
     var searchJob: Job? = null
 
@@ -62,9 +66,14 @@ class WeatherViewModel : ViewModel() {
                             weatherService.getLocation(query.location.latitude, query.location.longitude)
                     }
                     log.info(response.raw().toString())
-                    currentState = if (response.isSuccessful)
-                        State.Success(checkNotNull(response.body()))
-                        else State.Error
+                    currentState = if (response.isSuccessful) {
+                        val weather = checkNotNull(response.body())
+                        withContext(NonCancellable) {
+                            weatherDao.add(weather)
+                        }
+                        State.Success(weather)
+                    }
+                    else State.Error
                     liveState.value = currentState
                 }
             } else throw IllegalStateException("Only launch in Pending state")
