@@ -30,6 +30,8 @@ import org.kodein.di.generic.instance
 import org.kodein.di.generic.multiton
 import org.kodein.di.generic.singleton
 import pl.org.seva.weather.BuildConfig
+import pl.org.seva.weather.api.WeatherService
+import pl.org.seva.weather.api.WeatherServiceFactory
 import java.util.*
 import java.util.logging.Logger
 
@@ -42,6 +44,8 @@ inline val <T> KodeinProperty<T>.value get() = provideDelegate(null, Build::ID).
 
 class KodeinModuleBuilder(private val ctx: Context) {
 
+    private val weatherServiceFactory by instance<WeatherServiceFactory>()
+
     fun build() = Kodein.Module("main") {
         bind<Bootstrap>() with singleton { Bootstrap() }
         bind<Logger>() with multiton { tag: String ->
@@ -53,5 +57,7 @@ class KodeinModuleBuilder(private val ctx: Context) {
             }
         }
         bind<Geocoder>() with singleton { Geocoder(ctx, Locale.getDefault()) }
+        bind<WeatherServiceFactory>() with singleton { WeatherServiceFactory() }
+        bind<WeatherService>() with singleton { weatherServiceFactory.getWeatherService() }
     }
 }

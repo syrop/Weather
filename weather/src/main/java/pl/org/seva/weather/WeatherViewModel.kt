@@ -23,6 +23,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
+import pl.org.seva.weather.api.WeatherJson
 import pl.org.seva.weather.form.LocationAddress
 
 class WeatherViewModel : ViewModel() {
@@ -46,5 +47,7 @@ class WeatherViewModel : ViewModel() {
     sealed class State {
         object None : State()
         object InProgress : State()
+        object Error : State()
+        data class Success(val weather: WeatherJson) : State()
     }
 }
