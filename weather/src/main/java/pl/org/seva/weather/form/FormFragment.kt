@@ -46,6 +46,11 @@ class FormFragment : Fragment(R.layout.fr_form) {
             nav(R.id.action_form_to_presentation)
         }
 
+        fun clearFields() {
+            city_name.setText("")
+            location.setText("")
+        }
+
         city_name.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 viewModel.pendingSearch(city_name.text.toString())
@@ -56,6 +61,7 @@ class FormFragment : Fragment(R.layout.fr_form) {
 
         (viewModel.liveState to this) { state ->
             when (state) {
+                is WeatherViewModel.State.Idle -> clearFields()
                 is WeatherViewModel.State.Pending -> launchSearch()
             }
         }

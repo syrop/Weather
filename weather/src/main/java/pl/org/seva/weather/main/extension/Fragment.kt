@@ -20,6 +20,7 @@
 package pl.org.seva.weather.main.extension
 
 import android.content.SharedPreferences
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -32,3 +33,11 @@ fun Fragment.nav(@IdRes resId: Int): Boolean {
 fun Fragment.back() = findNavController().popBackStack()
 
 val Fragment.prefs: SharedPreferences get() = requireContext().prefs
+
+fun Fragment.onBack(block: () -> Unit) {
+
+    val callback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() = block()
+    }
+    requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+}

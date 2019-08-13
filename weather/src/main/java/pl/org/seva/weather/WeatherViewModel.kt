@@ -21,15 +21,22 @@ package pl.org.seva.weather
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import pl.org.seva.weather.api.WeatherJson
 import pl.org.seva.weather.api.WeatherService
+import pl.org.seva.weather.main.init.instance
 import java.lang.IllegalStateException
 
 class WeatherViewModel : ViewModel() {
 
-    var currentState: State = State.Idle
+    private val weatherService by instance<WeatherService>()
+    private var currentState: State = State.Idle
     val liveState = MutableLiveData(currentState)
+
+    var searchJob: Job? = null
 
     fun pendingSearch(location: LatLng) {
         currentState = State.Pending(
@@ -43,12 +50,29 @@ class WeatherViewModel : ViewModel() {
     }
 
     fun launchSearch() {
-        currentState.let {
-            if (it is State.Pending) {
+        currentState.let { state ->
+            if (state is State.Pending) {
                 currentState = State.InProgress
                 liveState.value = currentState
+                searchJob = viewModelScope.launch {
+                    val response = when (val query = state.query) {
+                        is WeatherService.Query.City -> weatherService.getCity(query.city)
+                        is WeatherService.Query.Location ->
+                            weatherService.getLocation(query.location.latitude, query.location.longitude)
+                    }
+                    currentState = if (response.isSuccessful)
+                        State.Success(checkNotNull(response.body()))
+                        else State.Error
+                    liveState.value = currentState
+                }
             } else throw IllegalStateException("Only launch in Pending state")
         }
+    }
+
+    fun cancelSearch() {
+        searchJob?.cancel()
+        currentState = State.Idle
+        liveState.value = currentState
     }
 
     sealed class State {

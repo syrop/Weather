@@ -26,7 +26,9 @@ import androidx.navigation.navGraphViewModels
 import kotlinx.android.synthetic.main.fr_presentation.*
 import pl.org.seva.weather.R
 import pl.org.seva.weather.WeatherViewModel
+import pl.org.seva.weather.main.extension.back
 import pl.org.seva.weather.main.extension.invoke
+import pl.org.seva.weather.main.extension.onBack
 
 class PresentationFragment : Fragment(R.layout.fr_presentation) {
 
@@ -44,6 +46,12 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
             when (state) {
                 is WeatherViewModel.State.InProgress -> inProgress()
             }
+        }
+
+        onBack {
+
+            viewModel.cancelSearch()
+            back()
         }
     }
 }

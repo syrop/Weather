@@ -25,11 +25,14 @@ import retrofit2.http.GET
 
 interface WeatherService {
 
-    @GET("weather?q={city}")
-    suspend fun getCity(city: String): Response<WeatherJson>
+    @GET("weather")
+    suspend fun getCity(
+            @retrofit2.http.Query("q") city: String): Response<WeatherJson>
 
-    @GET("weather?lat={lat}&lon={lon}")
-    suspend fun getLocation(lat: Double, lon: Double): Response<WeatherJson>
+    @GET("weather")
+    suspend fun getLocation(
+            @retrofit2.http.Query("lat") lat: Double,
+            @retrofit2.http.Query("lon") lon: Double): Response<WeatherJson>
 
     sealed class Query {
         data class City(val city: String) : Query()
