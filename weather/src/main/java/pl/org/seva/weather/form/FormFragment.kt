@@ -22,12 +22,17 @@ package pl.org.seva.weather.form
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import androidx.navigation.navGraphViewModels
 import kotlinx.android.synthetic.main.fr_form.*
 import pl.org.seva.weather.R
+import pl.org.seva.weather.WeatherViewModel
 import pl.org.seva.weather.main.extension.invoke
 import pl.org.seva.weather.main.extension.nav
 
 class FormFragment : Fragment(R.layout.fr_form) {
+
+    private val viewModel
+            by navGraphViewModels<WeatherViewModel>(R.id.nav_graph)
 
     @SuppressLint("CheckResult")
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -35,6 +40,17 @@ class FormFragment : Fragment(R.layout.fr_form) {
 
         location {
             nav(R.id.action_form_to_location_picker)
+        }
+
+        fun launchSearch() {
+            viewModel.launchSearch()
+            nav(R.id.action_form_to_presentation)
+        }
+
+        (viewModel.state to this) { state ->
+            when (state) {
+                is WeatherViewModel.State.Launch -> launchSearch()
+            }
         }
     }
 }

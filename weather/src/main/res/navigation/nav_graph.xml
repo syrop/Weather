@@ -36,7 +36,7 @@
     <fragment
         android:id="@+id/presentation"
         android:name="pl.org.seva.weather.presentation.PresentationFragment"
-        android:label="PresentFragment"
+        android:label="@string/presentation_label"
         tools:layout="@layout/fr_presentation"/>
 
 </navigation>

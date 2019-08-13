@@ -19,7 +19,31 @@
 
 package pl.org.seva.weather.presentation
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.navigation.navGraphViewModels
+import kotlinx.android.synthetic.main.fr_presentation.*
 import pl.org.seva.weather.R
+import pl.org.seva.weather.WeatherViewModel
+import pl.org.seva.weather.main.extension.invoke
 
-class PresentationFragment : Fragment(R.layout.fr_presentation)
+class PresentationFragment : Fragment(R.layout.fr_presentation) {
+
+    private val viewModel
+            by navGraphViewModels<WeatherViewModel>(R.id.nav_graph)
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        fun inProgress(state: WeatherViewModel.State.InProgress) {
+            progress.visibility = View.VISIBLE
+        }
+
+        (viewModel.state to this) { state ->
+            when (state) {
+                is WeatherViewModel.State.InProgress -> inProgress(state)
+            }
+        }
+    }
+}

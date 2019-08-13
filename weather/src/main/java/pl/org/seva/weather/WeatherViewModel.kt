@@ -19,34 +19,23 @@
 
 package pl.org.seva.weather
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.android.gms.maps.model.LatLng
 import pl.org.seva.weather.api.WeatherJson
-import pl.org.seva.weather.form.LocationAddress
+import pl.org.seva.weather.api.WeatherService
 
 class WeatherViewModel : ViewModel() {
 
-    private val mutableAddress by lazy { MutableLiveData<String?>() }
-    val addressLiveData get() = mutableAddress as LiveData<String?>
+    val state = MutableLiveData<State>(State.None)
 
-    var state = State.None
-
-    var location: LatLng? = null
-    var address: String? = null
-
-    fun setLocation(locationAddress: LocationAddress?) {
-        if (locationAddress != null) {
-            location = locationAddress.first
-            address = locationAddress.second
-        }
-        mutableAddress.value = locationAddress?.second ?: ""
+    fun launchSearch() {
+        state.value = State.InProgress((state.value as State.Launch).query)
     }
 
     sealed class State {
         object None : State()
-        object InProgress : State()
+        data class Launch(val query: WeatherService.Query) : State()
+        data class InProgress(val query: WeatherService.Query) : State()
         object Error : State()
         data class Success(val weather: WeatherJson) : State()
     }

@@ -22,10 +22,11 @@ package pl.org.seva.weather.form
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fr_location_picker.*
 import pl.org.seva.weather.R
 import pl.org.seva.weather.WeatherViewModel
-import pl.org.seva.weather.main.extension.invoke
+import pl.org.seva.weather.api.WeatherService
 import pl.org.seva.weather.main.extension.prefs
 
 class LocationPickerFragment : Fragment(R.layout.fr_location_picker) {
@@ -38,11 +39,13 @@ class LocationPickerFragment : Fragment(R.layout.fr_location_picker) {
 
         createInteractiveMapHolder(R.id.map) {
             prefs = this@LocationPickerFragment.prefs
-            onLocationSet = { viewModel.setLocation(it) }
-        }
-
-        (viewModel.addressLiveData to this) {
-            address.setText(it)
+            onLocationSet = {
+                val location = it.first
+                val addressLine = it.second
+                viewModel.state.value = WeatherViewModel.State.Launch(
+                        WeatherService.Query.Location(LatLng(location.latitude, location.longitude)))
+                address.setText(addressLine)
+            }
         }
     }
 }

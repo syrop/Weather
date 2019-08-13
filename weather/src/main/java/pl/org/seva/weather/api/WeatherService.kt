@@ -19,6 +19,7 @@
 
 package pl.org.seva.weather.api
 
+import com.google.android.gms.maps.model.LatLng
 import retrofit2.Response
 import retrofit2.http.GET
 
@@ -29,4 +30,9 @@ interface WeatherService {
 
     @GET("weather?lat={lat}&lon={lon}")
     suspend fun getLocation(lat: Double, lon: Double): Response<WeatherJson>
+
+    sealed class Query {
+        data class City(val city: String) : Query()
+        data class Location(val location: LatLng) : Query()
+    }
 }
