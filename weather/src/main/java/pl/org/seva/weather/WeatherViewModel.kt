@@ -21,21 +21,40 @@ package pl.org.seva.weather
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.android.gms.maps.model.LatLng
 import pl.org.seva.weather.api.WeatherJson
 import pl.org.seva.weather.api.WeatherService
+import java.lang.IllegalStateException
 
 class WeatherViewModel : ViewModel() {
 
-    val state = MutableLiveData<State>(State.None)
+    var currentState: State = State.Idle
+    val liveState = MutableLiveData(currentState)
+
+    fun pendingSearch(location: LatLng) {
+        currentState = State.Pending(
+                WeatherService.Query.Location(LatLng(location.latitude, location.longitude)))
+        liveState.value = currentState
+    }
+
+    fun pendingSearch(city: String) {
+        currentState = State.Pending(WeatherService.Query.City(city))
+        liveState.value = currentState
+    }
 
     fun launchSearch() {
-        state.value = State.InProgress((state.value as State.Launch).query)
+        currentState.let {
+            if (it is State.Pending) {
+                currentState = State.InProgress
+                liveState.value = currentState
+            } else throw IllegalStateException("Only launch in Pending state")
+        }
     }
 
     sealed class State {
-        object None : State()
-        data class Launch(val query: WeatherService.Query) : State()
-        data class InProgress(val query: WeatherService.Query) : State()
+        object Idle : State()
+        data class Pending(val query: WeatherService.Query) : State()
+        object InProgress : State()
         object Error : State()
         data class Success(val weather: WeatherJson) : State()
     }

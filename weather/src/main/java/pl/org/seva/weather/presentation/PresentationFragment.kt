@@ -36,13 +36,13 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        fun inProgress(state: WeatherViewModel.State.InProgress) {
+        fun inProgress() {
             progress.visibility = View.VISIBLE
         }
 
-        (viewModel.state to this) { state ->
+        (viewModel.liveState to this) { state ->
             when (state) {
-                is WeatherViewModel.State.InProgress -> inProgress(state)
+                is WeatherViewModel.State.InProgress -> inProgress()
             }
         }
     }
