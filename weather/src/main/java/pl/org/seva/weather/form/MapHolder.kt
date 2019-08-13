@@ -78,7 +78,7 @@ open class MapHolder {
     companion object {
         private const val DEFAULT_LAT = 51.1
         private const val DEFAULT_LON = 17.033333
-        private const val DEFAULT_ZOOM = 10f
+        private const val DEFAULT_ZOOM = 8.0f
 
         private const val ZOOM_PROPERTY = "zoom_property"
         private const val LAT_PROPERTY = "latitude_property"
