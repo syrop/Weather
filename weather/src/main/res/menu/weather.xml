@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="pl.org.seva.events.event.EventListFragment">
+
+    <item
+        android:id="@+id/action_add_admin"
+        android:title="@string/form_archive"
+        app:showAsAction="never"/>
+</menu>

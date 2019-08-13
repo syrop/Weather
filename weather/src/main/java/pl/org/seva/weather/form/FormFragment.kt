@@ -20,6 +20,9 @@
 package pl.org.seva.weather.form
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
@@ -65,5 +68,17 @@ class FormFragment : Fragment(R.layout.fr_form) {
                 is WeatherViewModel.State.Pending -> launchSearch()
             }
         }
+        setHasOptionsMenu(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_add_admin -> nav(R.id.action_form_to_archive)
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.weather, menu)
     }
 }

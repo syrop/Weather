@@ -4,6 +4,7 @@
     <!-- Form fragment. -->
     <string name="form_city_name">City name</string>
     <string name="form_from_map">From map</string>
+    <string name="form_archive">Archive</string>
 
     <!-- Location picker fragment. -->
     <string name="location_picker_label">Select location</string>

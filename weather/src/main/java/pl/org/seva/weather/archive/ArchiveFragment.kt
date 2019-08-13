@@ -19,7 +19,37 @@
 
 package pl.org.seva.weather.archive
 
+import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import kotlinx.android.synthetic.main.fr_archive.*
 import pl.org.seva.weather.R
+import pl.org.seva.weather.main.extension.invoke
 
-class ArchiveFragment : Fragment(R.layout.fr_archive)
+class ArchiveFragment : Fragment(R.layout.fr_archive) {
+
+    private val archiveViewModel
+            by lazy { ViewModelProvider(this)[ArchiveViewModel::class.java] }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        fun inProgress() {
+            progress.visibility = View.VISIBLE
+            recycler.visibility = View.GONE
+        }
+
+        fun showList(list: List<WeatherEntity>) {
+            progress.visibility = View.GONE
+            recycler.visibility = View.VISIBLE
+        }
+
+        (archiveViewModel.liveState to this) { state ->
+            when (state) {
+                is ArchiveViewModel.State.InProgress -> inProgress()
+                is ArchiveViewModel.State.Success -> showList(state.list)
+            }
+        }
+    }
+}
