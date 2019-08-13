@@ -31,7 +31,11 @@
         android:id="@+id/archive"
         android:name="pl.org.seva.weather.archive.ArchiveFragment"
         android:label="@string/archive_label"
-        tools:layout="@layout/fr_archive"/>
+        tools:layout="@layout/fr_archive">
+        <action
+            android:id="@+id/action_archive_to_presentation"
+            app:destination="@id/presentation" />
+    </fragment>
 
     <fragment
         android:id="@+id/presentation"

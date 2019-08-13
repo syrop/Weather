@@ -31,89 +31,139 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <LinearLayout
-        android:id="@+id/details"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/left_margin"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
+        app:layout_constraintGuide_begin="16dp"/>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/details"
+        app:constraint_referenced_ids="name_label,name,temp_label,temp,pressure_label,pressure,humidity_label,humidity,temp_max_label,temp_max,temp_min_label,temp_min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/right_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="16dp"/>
+
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:text="@string/presentation_name"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/presentation_name"/>
+    <TextView
+        android:id="@+id/name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/name_label"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        tools:text="London"/>
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            tools:text="London"/>
+    <TextView
+        android:id="@+id/temp_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:text="@string/presentation_temp"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/presentation_temp"/>
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/temp_label"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:textSize="20sp"
+        tools:text="280.32"/>
 
-        <TextView
-            android:id="@+id/temp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            tools:text="280.32"/>
+    <TextView
+        android:id="@+id/pressure_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/temp"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:text="@string/presentation_pressure"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/presentation_pressure"/>
+    <TextView
+        android:id="@+id/pressure"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/pressure_label"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:textSize="20sp"
+        tools:text="1012"/>
 
-        <TextView
-            android:id="@+id/pressure"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            tools:text="1012"/>
+    <TextView
+        android:id="@+id/humidity_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/pressure"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:text="@string/presentation_humidity"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/presentation_humidity"/>
+    <TextView
+        android:id="@+id/humidity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/humidity_label"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:textSize="20sp"
+        tools:text="81"/>
 
-        <TextView
-            android:id="@+id/humidity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            tools:text="81"/>
+    <TextView
+        android:id="@+id/temp_min_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/humidity"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:text="@string/presentation_temp_min"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/presentation_temp_min"/>
+    <TextView
+        android:id="@+id/temp_min"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/temp_min_label"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:textSize="20sp"
+        tools:text="279.15"/>
 
-        <TextView
-            android:id="@+id/temp_min"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            tools:text="279.15"/>
+    <TextView
+        android:id="@+id/temp_max_label"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/temp_min"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:text="@string/presentation_temp_max"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/presentation_temp_max"/>
+    <TextView
+        android:id="@+id/temp_max"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/temp_max_label"
+        app:layout_constraintStart_toStartOf="@id/left_margin"
+        app:layout_constraintEnd_toEndOf="@id/right_margin"
+        android:textSize="20sp"
+        tools:text="281.15"/>
 
-        <TextView
-            android:id="@+id/temp_max"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            tools:text="281.15"/>
-
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

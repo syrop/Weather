@@ -19,16 +19,10 @@
 
 package pl.org.seva.weather.main.extension
 
-import android.content.SharedPreferences
-import androidx.annotation.IdRes
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.LayoutRes
 
-fun Fragment.nav(@IdRes resId: Int): Boolean {
-    findNavController().navigate(resId)
-    return true
-}
-
-fun Fragment.back() = findNavController().popBackStack()
-
-val Fragment.prefs: SharedPreferences get() = requireContext().prefs
+fun ViewGroup.inflate(@LayoutRes resource: Int): View =
+        LayoutInflater.from(context).inflate(resource, this, false)

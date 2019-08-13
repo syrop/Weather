@@ -19,16 +19,9 @@
 
 package pl.org.seva.weather.main.extension
 
-import android.content.SharedPreferences
-import androidx.annotation.IdRes
-import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.RecyclerView
 
-fun Fragment.nav(@IdRes resId: Int): Boolean {
-    findNavController().navigate(resId)
-    return true
+fun RecyclerView.verticalDivider() {
+    addItemDecoration(DividerItemDecoration(checkNotNull(context), DividerItemDecoration.VERTICAL))
 }
-
-fun Fragment.back() = findNavController().popBackStack()
-
-val Fragment.prefs: SharedPreferences get() = requireContext().prefs

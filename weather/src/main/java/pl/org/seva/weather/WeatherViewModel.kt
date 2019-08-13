@@ -19,6 +19,7 @@
 
 package pl.org.seva.weather
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,58 +33,63 @@ import pl.org.seva.weather.api.WeatherService
 import pl.org.seva.weather.archive.WeatherDao
 import pl.org.seva.weather.main.extension.log
 import pl.org.seva.weather.main.init.instance
-import java.lang.IllegalStateException
 
 class WeatherViewModel : ViewModel() {
 
     private val weatherService by instance<WeatherService>()
     private var currentState: State = State.Idle
-    val liveState = MutableLiveData(currentState)
-    val weatherDao by instance<WeatherDao>()
+    private val mutableLiveState = MutableLiveData(currentState)
+    val liveState get() = mutableLiveState as LiveData<State>
+    private val weatherDao by instance<WeatherDao>()
 
     var searchJob: Job? = null
 
     fun pendingSearch(location: LatLng) {
         currentState = State.Pending(
                 WeatherService.Query.Location(LatLng(location.latitude, location.longitude)))
-        liveState.value = currentState
+        mutableLiveState.value = currentState
     }
 
     fun pendingSearch(city: String) {
         currentState = State.Pending(WeatherService.Query.City(city))
-        liveState.value = currentState
+        mutableLiveState.value = currentState
     }
 
     fun launchSearch() {
         currentState.let { state ->
-            if (state is State.Pending) {
-                currentState = State.InProgress
-                liveState.value = currentState
-                searchJob = viewModelScope.launch {
-                    val response = when (val query = state.query) {
-                        is WeatherService.Query.City -> weatherService.getCity(query.city)
-                        is WeatherService.Query.Location ->
-                            weatherService.getLocation(query.location.latitude, query.location.longitude)
-                    }
-                    log.info(response.raw().toString())
-                    currentState = if (response.isSuccessful) {
-                        val weather = checkNotNull(response.body())
-                        withContext(NonCancellable) {
-                            weatherDao.add(weather)
-                        }
-                        State.Success(weather)
-                    }
-                    else State.Error
-                    liveState.value = currentState
+            check(state is State.Pending) { "Only launch search from Pending state" }
+            currentState = State.InProgress
+            mutableLiveState.value = currentState
+            searchJob = viewModelScope.launch {
+                val response = when (val query = state.query) {
+                    is WeatherService.Query.City -> weatherService.getCity(query.city)
+                    is WeatherService.Query.Location ->
+                        weatherService.getLocation(query.location.latitude, query.location.longitude)
                 }
-            } else throw IllegalStateException("Only launch in Pending state")
+                log.info(response.raw().toString())
+                currentState = if (response.isSuccessful) {
+                    val weather = checkNotNull(response.body())
+                    withContext(NonCancellable) {
+                        weatherDao.add(weather)
+                    }
+                    State.Success(weather)
+                }
+                else State.Error
+                mutableLiveState.value = currentState
+            }
         }
     }
 
-    fun cancelSearch() {
+    fun setWeather(weather: WeatherJson) {
+        check(currentState == State.Idle) { "Only set fixed weather from Idle state" }
+        currentState = State.Success(weather)
+        mutableLiveState.value = currentState
+    }
+
+    fun reset() {
         searchJob?.cancel()
         currentState = State.Idle
-        liveState.value = currentState
+        mutableLiveState.value = currentState
     }
 
     sealed class State {

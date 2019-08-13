@@ -21,6 +21,7 @@ package pl.org.seva.weather.presentation
 
 import android.os.Bundle
 import android.view.View
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
 import kotlinx.android.synthetic.main.fr_presentation.*
@@ -29,7 +30,7 @@ import pl.org.seva.weather.WeatherViewModel
 import pl.org.seva.weather.api.WeatherJson
 import pl.org.seva.weather.main.extension.back
 import pl.org.seva.weather.main.extension.invoke
-import pl.org.seva.weather.main.extension.onBack
+
 
 class PresentationFragment : Fragment(R.layout.fr_presentation) {
 
@@ -71,8 +72,8 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
             }
         }
 
-        onBack {
-            viewModel.cancelSearch()
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            viewModel.reset()
             back()
         }
     }

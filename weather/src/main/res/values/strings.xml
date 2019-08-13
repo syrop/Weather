@@ -12,6 +12,7 @@
 
     <!-- Archive fragment. -->
     <string name="archive_label">Archive</string>
+    <string name="archive_no_data">No data yet.</string>
 
     <!-- Presentation fragment. -->
     <string name="presentation_label">Presentation</string>

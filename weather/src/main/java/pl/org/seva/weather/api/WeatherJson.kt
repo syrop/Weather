@@ -19,7 +19,7 @@
 
 package pl.org.seva.weather.api
 
-data class WeatherJson(val main: Main, val name: String) {
+data class WeatherJson(val name: String, val main: Main) {
 
     data class Main(
             val temp: Double,
