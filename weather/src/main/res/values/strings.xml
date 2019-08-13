@@ -20,5 +20,6 @@
     <string name="presentation_humidity">Humidity:</string>
     <string name="presentation_temp_min">Temp min:</string>
     <string name="presentation_temp_max">Temp max:</string>
+    <string name="presentation_error">Error</string>
 
 </resources>

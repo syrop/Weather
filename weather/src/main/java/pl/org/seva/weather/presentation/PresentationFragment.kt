@@ -40,11 +40,19 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
         super.onActivityCreated(savedInstanceState)
 
         fun inProgress() {
+            error.visibility = View.GONE
             details.visibility = View.GONE
             progress.visibility = View.VISIBLE
         }
 
+        fun error() {
+            error.visibility = View.VISIBLE
+            details.visibility = View.GONE
+            progress.visibility = View.GONE
+        }
+
         fun details(weather: WeatherJson) {
+            error.visibility = View.GONE
             details.visibility = View.VISIBLE
             progress.visibility = View.GONE
             name.text = weather.name
@@ -59,6 +67,7 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
             when (state) {
                 is WeatherViewModel.State.InProgress -> inProgress()
                 is WeatherViewModel.State.Success -> details(state.weather)
+                is WeatherViewModel.State.Error -> error()
             }
         }
 
