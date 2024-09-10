@@ -21,10 +21,10 @@ package pl.org.seva.weather.presentation
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
-import kotlinx.android.synthetic.main.fr_presentation.*
 import pl.org.seva.weather.R
 import pl.org.seva.weather.WeatherViewModel
 import pl.org.seva.weather.api.WeatherJson
@@ -36,6 +36,16 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
 
     private val viewModel
             by navGraphViewModels<WeatherViewModel>(R.id.nav_graph)
+
+    private val error by lazy { requireActivity().findViewById<View>(R.id.error) }
+    private val details by lazy { requireActivity().findViewById<View>(R.id.details) }
+    private val progress by lazy { requireActivity().findViewById<View>(R.id.progress) }
+    private val name by lazy { requireActivity().findViewById<TextView>(R.id.name) }
+    private val temp by lazy { requireActivity().findViewById<TextView>(R.id.temp) }
+    private val pressure by lazy { requireActivity().findViewById<TextView>(R.id.pressure) }
+    private val humidity by lazy { requireActivity().findViewById<TextView>(R.id.humidity) }
+    private val temp_min by lazy { requireActivity().findViewById<TextView>(R.id.temp_min) }
+    private val temp_max by lazy { requireActivity().findViewById<TextView>(R.id.temp_max) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -69,6 +79,7 @@ class PresentationFragment : Fragment(R.layout.fr_presentation) {
                 is WeatherViewModel.State.InProgress -> inProgress()
                 is WeatherViewModel.State.Success -> details(state.weather)
                 is WeatherViewModel.State.Error -> error()
+                else -> Unit
             }
         }
 

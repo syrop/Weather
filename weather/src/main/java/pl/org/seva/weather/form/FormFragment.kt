@@ -24,9 +24,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
-import kotlinx.android.synthetic.main.fr_form.*
 import pl.org.seva.weather.R
 import pl.org.seva.weather.WeatherViewModel
 import pl.org.seva.weather.main.extension.invoke
@@ -36,6 +36,9 @@ class FormFragment : Fragment(R.layout.fr_form) {
 
     private val viewModel
             by navGraphViewModels<WeatherViewModel>(R.id.nav_graph)
+
+    private val location by lazy { requireActivity().findViewById<TextView>(R.id.location) }
+    private val city_name by lazy { requireActivity().findViewById<TextView>(R.id.city_name) }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -66,6 +69,7 @@ class FormFragment : Fragment(R.layout.fr_form) {
             when (state) {
                 is WeatherViewModel.State.Idle -> clearFields()
                 is WeatherViewModel.State.Pending -> launchSearch()
+                else -> Unit
             }
         }
         setHasOptionsMenu(true)

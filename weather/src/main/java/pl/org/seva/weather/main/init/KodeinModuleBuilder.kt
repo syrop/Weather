@@ -29,7 +29,6 @@ import org.kodein.di.generic.bind
 import org.kodein.di.generic.instance
 import org.kodein.di.generic.multiton
 import org.kodein.di.generic.singleton
-import pl.org.seva.weather.BuildConfig
 import pl.org.seva.weather.api.WeatherService
 import pl.org.seva.weather.api.WeatherServiceFactory
 import pl.org.seva.weather.archive.WeatherDao
@@ -52,12 +51,7 @@ class KodeinModuleBuilder(private val ctx: Context) {
     fun build() = Kodein.Module("main") {
         bind<Bootstrap>() with singleton { Bootstrap() }
         bind<Logger>() with multiton { tag: String ->
-            checkNotNull(Logger.getLogger(tag)).apply {
-                if (!BuildConfig.DEBUG) {
-                    @Suppress("UsePropertyAccessSyntax")
-                    setFilter { false }
-                }
-            }
+            checkNotNull(Logger.getLogger(tag))
         }
         bind<Geocoder>() with singleton { Geocoder(ctx, Locale.getDefault()) }
         bind<WeatherServiceFactory>() with singleton { WeatherServiceFactory() }

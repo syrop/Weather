@@ -23,7 +23,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.row_date.view.*
 import pl.org.seva.weather.R
 import pl.org.seva.weather.main.extension.inflate
 import pl.org.seva.weather.main.extension.onClick
@@ -44,6 +43,6 @@ class WeatherDateAdapter(private val list: List<WeatherEntity>, private val onCl
 
         init { view onClick { onClick(adapterPosition) } }
 
-        val date: TextView = view.date
+        val date: TextView = view.findViewById(R.id.date)
     }
 }

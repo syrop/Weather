@@ -20,9 +20,9 @@
 package pl.org.seva.weather.form
 
 import android.os.Bundle
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.navGraphViewModels
-import kotlinx.android.synthetic.main.fr_location_picker.*
 import pl.org.seva.weather.R
 import pl.org.seva.weather.WeatherViewModel
 import pl.org.seva.weather.main.extension.prefs
@@ -41,7 +41,7 @@ class LocationPickerFragment : Fragment(R.layout.fr_location_picker) {
                 val location = it.first
                 val addressLine = it.second
                 viewModel.pendingSearch(location)
-                address.setText(addressLine)
+                requireActivity().findViewById<TextView>(R.id.address).setText(addressLine)
             }
         }
     }

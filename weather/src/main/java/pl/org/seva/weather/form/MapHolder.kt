@@ -19,6 +19,7 @@
 
 package pl.org.seva.weather.form
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
 import androidx.annotation.IdRes
 import androidx.core.content.edit
@@ -41,6 +42,7 @@ open class MapHolder {
     var prefs: SharedPreferences? = null
     private val mutableMap = MutableLiveData<GoogleMap>()
 
+    @SuppressLint("MissingPermission")
     open infix fun withMap(map: GoogleMap) {
         this@MapHolder.map = map
         val cameraUpdate = prefs?.let { prefs ->
@@ -69,7 +71,7 @@ open class MapHolder {
         with (checkNotNull(map)) {
             clear()
             latLng ?: return
-            addMarker(MarkerOptions().position(latLng))
+            addMarker(MarkerOptions().position(latLng))!!
                     .setIcon(BitmapDescriptorFactory.defaultMarker(0f))
             animateCamera(CameraUpdateFactory.newLatLng(latLng))
         }

@@ -40,7 +40,7 @@ class InteractiveMapHolder : MapHolder() {
                 with(geocoder.getFromLocation(
                         latLng.latitude,
                         latLng.longitude,
-                        1)[0]) {
+                        1)!![0]) {
                     getAddressLine(maxAddressLineIndex)
                 }
             } catch (e: Exception) {

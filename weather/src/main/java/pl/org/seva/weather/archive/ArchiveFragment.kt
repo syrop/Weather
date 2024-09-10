@@ -25,7 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.navGraphViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.fr_archive.*
+import androidx.recyclerview.widget.RecyclerView
 import pl.org.seva.weather.R
 import pl.org.seva.weather.WeatherViewModel
 import pl.org.seva.weather.api.WeatherJson
@@ -41,25 +41,29 @@ class ArchiveFragment : Fragment(R.layout.fr_archive) {
     private val viewModel
             by navGraphViewModels<WeatherViewModel>(R.id.nav_graph)
 
+    private val progress by lazy { requireActivity().findViewById<View>(R.id.progress) }
+    private val noData by lazy { requireActivity().findViewById<View>(R.id.no_data) }
+    private val recycler by lazy { requireActivity().findViewById<RecyclerView>(R.id.recycler) }
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         fun inProgress() {
             progress.visibility = View.VISIBLE
             recycler.visibility = View.GONE
-            no_data.visibility = View.GONE
+            noData.visibility = View.GONE
         }
 
         fun noData() {
             progress.visibility = View.GONE
             recycler.visibility = View.GONE
-            no_data.visibility = View.VISIBLE
+            noData.visibility = View.VISIBLE
         }
 
         fun showList(list: List<WeatherEntity>) {
             progress.visibility = View.GONE
             recycler.visibility = View.VISIBLE
-            no_data.visibility = View.GONE
+            noData.visibility = View.GONE
 
             recycler.setHasFixedSize(true)
             recycler.layoutManager = LinearLayoutManager(requireContext())

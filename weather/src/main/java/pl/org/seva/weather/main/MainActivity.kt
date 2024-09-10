@@ -22,9 +22,9 @@ package pl.org.seva.weather.main
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
-import kotlinx.android.synthetic.main.ac_main.*
 import pl.org.seva.weather.R
 
 class MainActivity : AppCompatActivity() {
@@ -36,7 +36,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.ac_main)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(findViewById<Toolbar>(R.id.toolbar))
+
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
